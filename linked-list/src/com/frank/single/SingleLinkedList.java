@@ -43,8 +43,17 @@ public class SingleLinkedList {
         temp.next = newNode;
     }
 
+
+    public Node getNode(int index) {
+        Node curNode = header;
+        for (int i = 0; i < index; i++) {
+            curNode = curNode.next;
+        }
+        return curNode;
+    }
+
     /**
-     * 在指定的节点后面添加节点
+     * 在指定的节点后面添加节点(不推荐使用,因为要获取节点,然后添加)
      *
      * @param data 数据
      * @param node 指定的节点
@@ -67,10 +76,7 @@ public class SingleLinkedList {
             return false;
         } else {
             Node newNode = new Node(data);
-            Node curNode = header;
-            for (int i = 0; i < index; i++) {
-                curNode = curNode.next;
-            }
+            Node curNode = getNode(index);
             newNode.next = curNode.next;
             curNode.next = newNode;
         }
