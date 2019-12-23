@@ -161,5 +161,47 @@ public class SingleLinkedList {
         }
     }
 
+    /**
+     * 将链表进行反转
+     */
+    public Node reverseList1(Node headerNode){
+        //单链表为空或只有一个节点，直接返回原单链表
+        if (headerNode == null || headerNode.next == null){
+            return headerNode;
+        }
+        //前一个节点指针
+        Node preNode = null;
+        //当前节点指针
+        Node curNode = headerNode;
+        //下一个节点指针
+        Node nextNode = null;
 
+        while (curNode != null){
+            //nextNode 指向下一个节点
+            nextNode = curNode.next;
+            //将当前节点next域指向前一个节点
+            curNode.next = preNode;
+            //preNode 指针向后移动
+            preNode = curNode;
+            //curNode指针向后移动
+            curNode = nextNode;
+        }
+        return preNode;
+
+    }
+    /**
+     * 将链表进行反转
+     */
+    public Node reverseList2(Node headerNode) {
+        //单链表为空或只有一个节点，直接返回原单链表
+        if (headerNode.next == null || headerNode == null) {
+            return headerNode;
+        }
+        Node reverse = reverseList2(headerNode.next);
+        headerNode.next.next = headerNode;
+        headerNode.next = null;
+
+        return reverse;
+
+    }
 }
