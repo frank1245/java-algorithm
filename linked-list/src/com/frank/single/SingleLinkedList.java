@@ -131,24 +131,6 @@ public class SingleLinkedList {
         return length;
     }
 
-    /**
-     * 在不知道头指针的情况下删除指定节点
-     *
-     * @param node 节点
-     * @return
-     */
-    public Boolean deleteNode(Node node) {
-        if (node == null && node.next == null) {
-            return false;
-        }
-        //将当前节点和下一节点的值互换,然后改变节点指向
-        Object temp = node.data;
-        node.data = node.next.data;
-        node.next.data = temp;
-        node.next = node.next.next;
-        System.out.println("删除成功");
-        return true;
-    }
 
     /**
      * 打印链表
@@ -164,9 +146,9 @@ public class SingleLinkedList {
     /**
      * 将链表进行反转
      */
-    public Node reverseList1(Node headerNode){
+    public Node reverseList1(Node headerNode) {
         //单链表为空或只有一个节点，直接返回原单链表
-        if (headerNode == null || headerNode.next == null){
+        if (headerNode == null || headerNode.next == null) {
             return headerNode;
         }
         //前一个节点指针
@@ -176,7 +158,7 @@ public class SingleLinkedList {
         //下一个节点指针
         Node nextNode = null;
 
-        while (curNode != null){
+        while (curNode != null) {
             //nextNode 指向下一个节点
             nextNode = curNode.next;
             //将当前节点next域指向前一个节点
@@ -189,6 +171,7 @@ public class SingleLinkedList {
         return preNode;
 
     }
+
     /**
      * 将链表进行反转
      */
@@ -204,4 +187,125 @@ public class SingleLinkedList {
         return reverse;
 
     }
+
+    /**
+     * 获取中间节点
+     *
+     * @param headerNode
+     * @return
+     */
+    public Node getMidNode(Node headerNode) {
+        //单链表为空或只有一个节点，直接返回原单链表
+        Node midNode = headerNode;
+        Node p = headerNode;
+        while (p.next != null && p != null && p.next.next != null) {
+            midNode = midNode.next;
+            p = p.next.next;
+        }
+        return midNode;
+    }
+
+    /**
+     * 查找倒数 第k个元素
+     *
+     * @param headerNode
+     * @param k
+     * @return
+     */
+    public Node findReciprocalElem(Node headerNode, int k) {
+        if (k < 0 || k > length()) {
+            return null;
+        }
+        Node p1 = headerNode;
+        Node p2 = headerNode;
+        for (int i = 0; i < k; i++) {
+            p1 = p1.next;
+        }
+        while (p1 != null) {
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        return p2;
+    }
+
+    /**
+     * 删除重复的节点
+     *
+     * @param headerNode
+     */
+    public void deleteDuplecate(Node headerNode) {
+        Node p = headerNode;
+        while (p != null) {
+            Node q = p;
+            while (q.next != null) {
+                if (p.data.equals(q.next.data)) {
+                    q.next = q.next.next;
+                } else {
+                    q = q.next;
+                }
+            }
+            p = p.next;
+        }
+    }
+
+    /**
+     * 采用递归的方式
+     */
+    public void printReverseList(Node headerNode) {
+        if (headerNode != null) {
+            printReverseList(headerNode.next);
+            System.out.println(headerNode.data);
+        }
+    }
+
+    /**
+     * 判断链表是否有环，单向链表有环时，尾节点相同
+     *
+     * @param headerNode
+     * @return
+     */
+    public boolean isLoop(Node headerNode) {
+        if (headerNode == null) {
+            return false;
+        }
+        Node fastNode = headerNode;
+        Node slowNode = headerNode;
+        while (fastNode != null && fastNode.next != null) {
+            fastNode = fastNode.next.next;
+            slowNode = slowNode.next;
+            if (fastNode == slowNode) {
+                System.out.println("该链表有环!!!");
+                return true;
+            }
+        }
+        return !(fastNode == null || fastNode.next == null);
+    }
+
+    /**
+     * 找出链表环的入口
+     *
+     * @param headerNode
+     * @return slowNode
+     */
+    public Node FindLoopPort(Node headerNode) {
+        Node fastNode = headerNode;
+        Node slowNode = headerNode;
+        while (fastNode != null && fastNode.next != null) {
+            slowNode = slowNode.next;
+            fastNode = fastNode.next.next;
+            if (slowNode == fastNode) {
+                break;
+            }
+        }
+        if (fastNode == null || fastNode.next == null) {
+            return null;
+        }
+        slowNode = headerNode;
+        while (slowNode != fastNode) {
+            slowNode = slowNode.next;
+            fastNode = fastNode.next;
+        }
+        return slowNode;
+    }
+
 }
